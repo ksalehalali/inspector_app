@@ -43,8 +43,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool changeFromTo = false;
 
   List<Tab> homeTabs = [
-    Tab(text: 'Check'),
-    Tab(text: 'Buses Checked'),
+    const Tab(text: 'Actions'),
+    const Tab(text: 'Buses Checked'),
   ];
   final InspectorController inspectorController = Get.find();
   var scanType='';
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     alignment: Alignment.center
                 ),
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               ElevatedButton(
                 onPressed: () async{
                   scanType = 'Ticket';
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: routes_color,
       body: Padding(
-        padding: EdgeInsets.only(top: 42),
+        padding: const EdgeInsets.only(top: 42),
         child: Obx(()=>Stack(
             children: [
               Column(
@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ? Align(
                                   alignment: Alignment.centerRight,
                                   child: Container(
-                                    margin: EdgeInsets.only(bottom: 14),
+                                    margin: const EdgeInsets.only(bottom: 14),
                                     width: 28,
                                     height: 28,
                                     decoration: BoxDecoration(
@@ -286,7 +286,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   height: 52,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.all(
+                                    borderRadius: const BorderRadius.all(
                                       Radius.circular(28),
                                     ),
                                     boxShadow: [

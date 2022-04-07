@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../Inspector_View/home/bus_details.dart';
+
 class InspectorController extends GetxController{
   var openCam =false.obs;
-
+  var busScanned = {};
 
   Future getBusData(String busId)async{
 
@@ -23,9 +25,13 @@ class InspectorController extends GetxController{
     if (response.statusCode == 200) {
       var json = jsonDecode(await response.stream.bytesToString());
       var data = json['description'];
+      busScanned =data;
       print(data);
-
+      openCam.value =false;
+      Get.to(()=> const BusDetails());
     }
+
+
   }
 
 }

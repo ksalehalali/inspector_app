@@ -1,0 +1,8 @@
+
+import 'package:inspector_app/Inspector_Models/payment_saved_model.dart';
+
+import '../Inspector_Models/charge_toSave_model.dart';
+
+PaymentSaved paymentSaved = PaymentSaved();
+ChargeSaved chargeSaved = ChargeSaved();
+String myToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiOTg4MjQ1NjciLCJSb2xlIjoiSW5zcGVjdG9yIiwiZXhwIjoxNjUxOTEzMDIyLCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.NDcgeB2_7Hbs2FJWNpY0L_fn3NKxGi2n14JuTSKVrOs";
