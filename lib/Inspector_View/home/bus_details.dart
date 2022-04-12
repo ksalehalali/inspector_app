@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../Inspector_Controllers/globals.dart';
 import '../../Inspector_Controllers/inspector_controller.dart';
 
 class BusDetails extends StatefulWidget {
@@ -18,10 +19,15 @@ class _BusDetailsState extends State<BusDetails> {
     return Container(
 
       child: SafeArea(child:Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0.0,
+        //   foregroundColor: routes_color,
+        // ),
         body: Column(
           children: [
             Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.only(top:30.0,right: 12,left:12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -29,13 +35,13 @@ class _BusDetailsState extends State<BusDetails> {
                   children: [
                     Center(
                       child: Text(
-                        '${inspectorController.busScanned['company']}',
+                        inspectorController.busScanned.value ==true ?'${inspectorController.busScannedData['company']}':'',
                         style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green[700],),
                       ),
                     ),
                     const SizedBox(
-                      height: 22.0,
+                      height: 42.0,
                     ),
                     const SizedBox(
                       height: 8.0,
@@ -48,7 +54,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['palteNumber']}',
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['palteNumber']}':'',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -68,7 +74,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height:4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['kind']}',                      style: const TextStyle(
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['kind']}':'',                      style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     dividerDesign(),
@@ -84,7 +90,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['applicationRoute']['name_EN']}',
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['applicationRoute']['name_EN']}':'',
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -101,7 +107,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['applicationRoute']['from_To_EN']}',
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['applicationRoute']['from_To_EN']}':'',
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -118,7 +124,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['active'].toString()}',
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['active'].toString()}':'',
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -139,7 +145,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['palteNumber']}',
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['palteNumber']}':'',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -159,7 +165,8 @@ class _BusDetailsState extends State<BusDetails> {
                       height:4.0,
                     ),
                     Text(
-                      '${inspectorController.busScanned['kind']}',                      style: const TextStyle(
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['kind']}':'',
+                      style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     dividerDesign(),

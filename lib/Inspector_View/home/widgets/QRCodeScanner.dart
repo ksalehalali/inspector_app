@@ -6,8 +6,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspector_app/Inspector_Controllers/current_data.dart';
 import 'package:inspector_app/Inspector_Controllers/inspector_controller.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import '../../confirm_sendCredit_screen.dart';
 
 
 class QRScanner extends StatefulWidget {
@@ -83,18 +86,23 @@ class _QRScannerState extends State<QRScanner> {
       print(scanData.code);
       controller.stopCamera();
       var json = jsonDecode(result!.code!);
-      var a = json['busId'];
-      var b = json['busId'];
+
 
      if(widget.scanType =='Bus'){
-       inspectorController.getBusData('');
+       var busId = json['busId'];
+       var b = json['busId'];
+       inspectorController.getBusData(busId);
+     }else if(widget.scanType =='Ticket'){
 
-     }else{
-     {
+    }else if(widget.scanType =='Send'){
+      var userId = json['userId'];
+      var userName = json['userName'];
+      print('send money to userId : $userName');
+      paySaved.userName =userName;
+      paySaved.uid = userId;
 
-     }
-
-    }});
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const ConfirmSend()));
+     }});
     }
 
   @override

@@ -90,7 +90,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BalanceCalculator()));
+                              builder: (context) => const BalanceCalculator(chargeAmount: true,)));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

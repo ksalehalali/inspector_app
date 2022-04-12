@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -9,12 +11,18 @@ import 'package:myfatoorah_flutter/model/initsession/SDKInitSessionResponse.dart
 import 'package:myfatoorah_flutter/myfatoorah_flutter.dart';
 
 import '../../Inspector_Controllers/current_data.dart';
+import '../../Inspector_Controllers/inspector_controller.dart';
+import '../home/widgets/QRCodeScanner.dart';
+import '../main_screen.dart';
 
 
 const Color colorDark = Color(0xFF374352);
 const Color colorLight = Color(0xFFe6eeff);
 
 class BalanceCalculator extends StatefulWidget {
+  final bool chargeAmount;
+
+  const BalanceCalculator({Key? key, required this.chargeAmount}) : super(key: key);
   @override
   _BalanceCalculatorState createState() => _BalanceCalculatorState();
 }
@@ -35,7 +43,7 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    initiateSession();
+    widget.chargeAmount==true ?initiateSession():null;
     if(Get.isDarkMode){
       setState(() {
         darkMode = true;
@@ -43,6 +51,7 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
     }
 
   }
+  final InspectorController inspectorController = Get.find();
 
   checkLocalMode(){
     if(MediaQuery.of(context).platformBrightness == Brightness.dark){
@@ -63,13 +72,13 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
       child: FlatButton(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0.0),
-              side: BorderSide(
+              side: const BorderSide(
                   color: Colors.white, width: 1, style: BorderStyle.solid)),
           padding: EdgeInsets.all(16.0),
           onPressed: null,
           child: Text(
             buttonText,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.normal,
                 color: Colors.white),
@@ -89,7 +98,7 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
         elevation: 0.0,
         leading: InkWell(
           onTap: (){
-            Get.back();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const MainScreen( currentPage: 0,)));
           },
           child: Icon(
             Icons.close,
@@ -101,103 +110,106 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+          child:
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
 
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
 
-                      Padding(padding: EdgeInsets.only(left: 18.0),child:  Align(
-                          alignment: Alignment.centerLeft,
-                          child:  RichText(text:TextSpan(style: TextStyle(fontWeight: FontWeight.bold),children: [
-                            a.length>=5 ? TextSpan(text: a[4]==','?'.':a[4],style: TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ?Colors.white: Colors.black,fontSize: 38)):TextSpan(text: "0",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
-                            a.length>=6?TextSpan(text: a[5]==','?'.':a[5],style: TextStyle(color:isFirstNum? Colors.grey[600]:darkMode ?Colors.white:Colors.black,fontSize: 38)):TextSpan(text: ".",style: TextStyle(color:isFirstNum? Colors.grey[600]:Colors.black,fontSize: 38)),
-                            a.length<=5 ? TextSpan(text: '0',style: TextStyle(color: Colors.grey[600],fontSize: 38)):TextSpan(text: "",),
+                            Padding(padding: EdgeInsets.only(left: 18.0),child:  Align(
+                                alignment: Alignment.centerLeft,
+                                child:  RichText(text:TextSpan(style: TextStyle(fontWeight: FontWeight.bold),children: [
+                                  a.length>=5 ? TextSpan(text: a[4]==','?'.':a[4],style: TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ?Colors.white: Colors.black,fontSize: 38)):TextSpan(text: "0",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
+                                  a.length>=6?TextSpan(text: a[5]==','?'.':a[5],style: TextStyle(color:isFirstNum? Colors.grey[600]:darkMode ?Colors.white:Colors.black,fontSize: 38)):TextSpan(text: ".",style: TextStyle(color:isFirstNum? Colors.grey[600]:Colors.black,fontSize: 38)),
+                                  a.length<=5 ? TextSpan(text: '0',style: TextStyle(color: Colors.grey[600],fontSize: 38)):TextSpan(text: "",),
 
-                            a.length>=7 ?TextSpan(text: a[6]==','?'.':a[6],style:TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ? Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "0",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
-                            a.length>=8?TextSpan(text: a[7],style: TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ?Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "0",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
-                            a.length>=9?TextSpan(text:  a[8],style: TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ? Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
-                            a.length>=10?TextSpan(text:  a[9],style: TextStyle(color:isFirstNum? Colors.grey[600]:darkMode ? Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
-                            TextSpan(text: '  KD',style: TextStyle(color:darkMode? Colors.white : Colors.black,fontSize: 38)),
+                                  a.length>=7 ?TextSpan(text: a[6]==','?'.':a[6],style:TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ? Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "0",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
+                                  a.length>=8?TextSpan(text: a[7],style: TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ?Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "0",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
+                                  a.length>=9?TextSpan(text:  a[8],style: TextStyle(color:isFirstNum? Colors.grey[600]: darkMode ? Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
+                                  a.length>=10?TextSpan(text:  a[9],style: TextStyle(color:isFirstNum? Colors.grey[600]:darkMode ? Colors.white : Colors.black,fontSize: 38)):TextSpan(text: "",style: TextStyle(color: Colors.grey[600],fontSize: 38)),
+                                  TextSpan(text: '  KD',style: TextStyle(color:darkMode? Colors.white : Colors.black,fontSize: 38)),
 
-                          ]) )
-                      ),),
-                      Padding(padding: EdgeInsets.only(right: 18.0),child:  IconButton(
-                          onPressed: () {
-                            if (val.length > 0) {
-                              setState(() {
-                                int index = val.length;
-                                val = val.replaceRange(index - 1, index, '');
-                                if(val.length>0){
-                                  amount = int.parse(val);
-                                }
-                                if(val.isEmpty){
-                                  isFirstNum =true;
-                                  amount =0;
-                                  inputEnable =true;
-                                }
-                                if(a.length <=10 ){
-                                  a = NumberFormat.currency(locale: 'ar-kw',decimalDigits: 0,symbol: "KWD").format(amount);
-                                  print(a);
-                                  print(a.length);
-                                }
-                                valDouble.ceil();
-                              });
-                            }
-                          },
-                          icon: Icon(
-                            Icons.backspace_outlined,
-                            size: 38,
-                            color: darkMode ? Colors.white : Colors.black,
-                          )),)
-                    ],
-                  ),
-                  SizedBox(height: 16.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      customButton(btnVal: '1', isDelete: false, isSend: false),
-                      customButton(btnVal: '2', isDelete: false, isSend: false),
-                      customButton(btnVal: '3', isDelete: false, isSend: false),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      customButton(btnVal: '4', isDelete: false, isSend: false),
-                      customButton(btnVal: '5', isDelete: false, isSend: false),
-                      customButton(btnVal: '6', isDelete: false, isSend: false),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      customButton(btnVal: '7', isDelete: false, isSend: false),
-                      customButton(btnVal: '8', isDelete: false, isSend: false),
-                      customButton(btnVal: '9', isDelete: false, isSend: false),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      customButton(btnVal: '0', isDelete: false, isSend: false),
-                      // customButton(btnVal: '.', isDelete: false, isSend: false),
-                      customButton(
-                          btnVal: 'Next', isDelete: false, isSend: true),
-                    ],
-                  ),
-                ]),
-              ),
-            ],
-          ),
+                                ]) )
+                            ),),
+                            Padding(padding: EdgeInsets.only(right: 18.0),child:  IconButton(
+                                onPressed: () {
+                                  if (val.length > 0) {
+                                    setState(() {
+                                      int index = val.length;
+                                      val = val.replaceRange(index - 1, index, '');
+                                      if(val.length>0){
+                                        amount = int.parse(val);
+                                      }
+                                      if(val.isEmpty){
+                                        isFirstNum =true;
+                                        amount =0;
+                                        inputEnable =true;
+                                      }
+                                      if(a.length <=10 ){
+                                        a = NumberFormat.currency(locale: 'ar-kw',decimalDigits: 0,symbol: "KWD").format(amount);
+                                        print(a);
+                                        print(a.length);
+                                      }
+                                      valDouble.ceil();
+                                    });
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.backspace_outlined,
+                                  size: 38,
+                                  color: darkMode ? Colors.white : Colors.black,
+                                )),)
+                          ],
+                        ),
+                        SizedBox(height: 16.0,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            customButton(btnVal: '1', isDelete: false, isSend: false),
+                            customButton(btnVal: '2', isDelete: false, isSend: false),
+                            customButton(btnVal: '3', isDelete: false, isSend: false),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            customButton(btnVal: '4', isDelete: false, isSend: false),
+                            customButton(btnVal: '5', isDelete: false, isSend: false),
+                            customButton(btnVal: '6', isDelete: false, isSend: false),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            customButton(btnVal: '7', isDelete: false, isSend: false),
+                            customButton(btnVal: '8', isDelete: false, isSend: false),
+                            customButton(btnVal: '9', isDelete: false, isSend: false),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            customButton(btnVal: '0', isDelete: false, isSend: false),
+                            // customButton(btnVal: '.', isDelete: false, isSend: false),
+                            customButton(
+                                btnVal: 'Next', isDelete: false, isSend: true),
+                          ],
+                        ),
+                      ]),
+                    ),
+                  ],
+                ),
+               // inspectorController.openCam.value ==true? QRScanner(scanType: 'Send',):Container(),
+
         ),
       ),
     );
@@ -253,12 +265,16 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
                 color: darkMode ? Colors.white : Colors.black, width: 0.1)),
         onPressed: () {
           if(isSend==true&&isDelete==false && amount >= 100){
-            chargeSaved.invoiceValue = amount.toDouble()/1000;
+           paySaved.value = amount.toDouble()/1000;
             //go payment
-            showD(context);
-            //Navigator.push(context, MaterialPageRoute(builder: (context)=>CreditCardScreen(isPay: true,)));
-
-            return;
+           if(widget.chargeAmount ==true){
+             showD(context);
+             //Navigator.push(context, MaterialPageRoute(builder: (context)=>CreditCardScreen(isPay: true,)));
+             return;
+           }else{
+             Get.to(()=>QRScanner(context: context,scanType: 'Send',));
+             return;
+           }
           }else if(isSend==true&&isDelete==false && amount >= 100 ){
             if(!Get.isSnackbarOpen){
               Get.snackbar(

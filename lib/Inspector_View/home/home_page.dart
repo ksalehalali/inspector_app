@@ -2,6 +2,7 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspector_app/Inspector_View/wallet/balance_calculator.dart';
 
 import '../../Inspector_Controllers/consts.dart';
 import '../../Inspector_Controllers/globals.dart';
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
               ElevatedButton(
                 onPressed: () async{
-
+                  Get.to(()=>const BalanceCalculator(chargeAmount: false,));
                 },
                 child: const Text(
                   "Send money",
@@ -357,7 +358,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    searchSelected = !searchSelected;
+                                    //searchSelected = !searchSelected;
                                   });
                                 },
                                 style: ButtonStyle(

@@ -4,10 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import '../Inspector_Controllers/globals.dart';
 import 'home/bus_details.dart';
 import 'home/home_page.dart';
+import 'home/profile_screen.dart';
 import 'wallet/wallet_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final int currentPage;
+  const MainScreen({Key? key, required this.currentPage}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -18,14 +20,27 @@ class _MainScreenState extends State<MainScreen> {
     const HomePage(),
     const WalletScreen(),
     const BusDetails(),
+    ProfileScreen(),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = const HomePage();
 
   int? currentTp = 0;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+      setState(() {
+        currentScreen = screens[widget.currentPage];
+        currentTp = widget.currentPage;
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    currentTp = widget.currentPage;
     return Container(
 
         child:SafeArea(child: Scaffold(
@@ -69,6 +84,17 @@ class _MainScreenState extends State<MainScreen> {
                     label: 'Wallet',
                     selectedIcon: SvgPicture.asset("${assetsDir}wallet.svg", width: 25, color: Colors.blue[900],),
                   )),
+              NavigationBarTheme(
+                  data: NavigationBarThemeData(
+                      indicatorColor: Colors.grey.shade200,
+                      labelTextStyle:
+                      MaterialStateProperty.all(TextStyle(fontSize: 12))),
+                  child: NavigationDestination(
+                    icon: SvgPicture.asset("assets/images/businfoo.svg", width: 25, color: Colors.grey[600],),
+                    label: 'Bus',
+                    selectedIcon: SvgPicture.asset("assets/images/businfoo.svg", width: 30, color: Colors.blue[900],),
+                  )),
+
               NavigationBarTheme(
                   data: NavigationBarThemeData(
                       indicatorColor: Colors.grey.shade200,

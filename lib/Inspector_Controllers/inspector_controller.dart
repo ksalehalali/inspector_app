@@ -1,12 +1,18 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../Inspector_View/confirm_sendCredit_screen.dart';
 import '../Inspector_View/home/bus_details.dart';
+import '../Inspector_View/home/widgets/dialogs.dart';
+import '../Inspector_View/main_screen.dart';
+import 'current_data.dart';
 
 class InspectorController extends GetxController{
   var openCam =false.obs;
-  var busScanned = {};
+  var busScanned =false.obs;
+  var busScannedData = {};
 
   Future getBusData(String busId)async{
 
@@ -16,7 +22,7 @@ class InspectorController extends GetxController{
     };
     var request = http.Request('POST', Uri.parse('https://route.click68.com/api/GetBus'));
     request.body = json.encode({
-      "id":"7869991b-9dcb-480f-f503-08da163583a3"
+      "id":busId
     });
     request.headers.addAll(headers);
 
@@ -25,10 +31,53 @@ class InspectorController extends GetxController{
     if (response.statusCode == 200) {
       var json = jsonDecode(await response.stream.bytesToString());
       var data = json['description'];
-      busScanned =data;
+      busScannedData =data;
       print(data);
       openCam.value =false;
-      Get.to(()=> const BusDetails());
+      busScanned.value =true;
+      Get.to(()=>  const MainScreen( currentPage: 2,));
+    }else{
+      busScanned.value =false;
+      Get.snackbar(
+          'Error', 'Error while getting bus dataB',
+          duration: 3.seconds, colorText: Colors.red[900]);
+      Get.to(()=> const MainScreen(currentPage: 0,));
+
+    }
+
+
+  }
+
+  Future sendCreditRequest()async{
+
+    var headers = {
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiUHJvbW90ZXIzIiwiUm9sZSI6IlByb21vdGVyIiwiZXhwIjoxNjUyMjY3MjQ4LCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.tMEbPLClGg260BMvVEZgJO_cToYNBTj_ox7pS5LQnNk',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://route.click68.com/api/ChargeWalletByPromoter'));
+    request.body = json.encode({
+      "api_key": "\$FhlF]3;.OIic&{>H;_DeW}|:wQ,A8",
+      "api_secret": "Z~P7-_/i!=}?BIwAd*S67LBzUo4O^G",
+      "UserID": paySaved.uid,
+      "PromoterID": "1d31cd22-d1a7-453d-a0e8-43aebe2d7fba",
+      "invoiceValue": paySaved.value
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+
+      print(await response.stream.bytesToString());
+
+      openCam.value =false;
+      Get.offUntil(MaterialPageRoute(builder: (context)=>const MainScreen(currentPage: 0,)), (route) => false);
+
+      Get.dialog(CustomDialog( sendFailed: false));
+
+    }
+    else {
+      print(response.reasonPhrase);
     }
 
 

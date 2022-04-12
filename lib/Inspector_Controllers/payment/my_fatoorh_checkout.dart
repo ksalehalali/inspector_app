@@ -63,7 +63,7 @@ class MyFatoorah {
                   // chargeSaved.createdDate = res['CreatedDate'],
                   // chargeSaved.paymentGateway =
                   //     res['InvoiceTransactions'][0]['PaymentGateway'],
-                  Get.offAll(const MainScreen())
+                  Get.offAll(const MainScreen(currentPage: 0,))
                 }
               else
                 {
