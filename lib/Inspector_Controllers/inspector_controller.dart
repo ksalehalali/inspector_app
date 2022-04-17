@@ -47,11 +47,38 @@ class InspectorController extends GetxController{
 
 
   }
+  Future checkTickets(String paymentId,String userId,)async{
+    var headers = {
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiOTg4MjQ1NjciLCJSb2xlIjoiSW5zcGVjdG9yIiwiZXhwIjoxNjUyNzgzNTcxLCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.bgfEH_ENujNt-aixuFFd1XbkZc2yIMUFCzggOIf5jZs',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://route.click68.com/api/CheckPaymentByInspector'));
+    request.body = json.encode({
+      "PaymentId": paymentId,
+      "UserId":userId,
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      openCam.value =false;
+      Get.dialog(CustomDialogTickets( failed: false));
+    }
+    else {
+      print(response.statusCode);
+      print(response.reasonPhrase);
+      Get.dialog(CustomDialogTickets( failed: true));
+
+    }
+
+  }
 
   Future sendCreditRequest()async{
 
     var headers = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiUHJvbW90ZXIzIiwiUm9sZSI6IlByb21vdGVyIiwiZXhwIjoxNjUyMjY3MjQ4LCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.tMEbPLClGg260BMvVEZgJO_cToYNBTj_ox7pS5LQnNk',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicHJvbW90ZXI5OCIsIlJvbGUiOiJQcm9tb3RlciIsImV4cCI6MTY1Mjc4MzAyNSwiaXNzIjoiSW52ZW50b3J5QXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJJbnZlbnRvcnlTZXJ2aWNlUG90bWFuQ2xpZW50In0.OHCvZjl745patjv9uipuVl5Vue1mRpx_GpqSg6n5wck',
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST', Uri.parse('https://route.click68.com/api/ChargeWalletByPromoter'));
@@ -77,6 +104,8 @@ class InspectorController extends GetxController{
 
     }
     else {
+      print(response.statusCode);
+
       print(response.reasonPhrase);
     }
 

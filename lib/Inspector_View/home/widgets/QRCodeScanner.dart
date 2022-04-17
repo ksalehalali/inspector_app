@@ -49,6 +49,7 @@ class _QRScannerState extends State<QRScanner> {
           onTap: () {
 
     inspectorController.openCam.value =false;
+    Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back),
         ),
@@ -93,6 +94,9 @@ class _QRScannerState extends State<QRScanner> {
        var b = json['busId'];
        inspectorController.getBusData(busId);
      }else if(widget.scanType =='Ticket'){
+       var userId = json['userId'];
+       var paymentId = json['paymentId'];
+       inspectorController.checkTickets(paymentId, userId);
 
     }else if(widget.scanType =='Send'){
       var userId = json['userId'];
