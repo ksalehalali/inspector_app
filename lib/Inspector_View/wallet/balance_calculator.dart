@@ -268,7 +268,7 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
            paySaved.value = amount.toDouble()/1000;
             //go payment
            if(widget.chargeAmount ==true){
-             showD(context);
+             showOptionsCardsDialog(context);
              //Navigator.push(context, MaterialPageRoute(builder: (context)=>CreditCardScreen(isPay: true,)));
              return;
            }else{

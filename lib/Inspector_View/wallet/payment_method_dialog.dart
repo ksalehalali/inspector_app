@@ -8,7 +8,7 @@ import '../../Inspector_Controllers/payment/check_out.dart';
 import '../../Inspector_Controllers/payment/my_fatoorh_checkout.dart';
 
 
-Future<void> showD(context) async {
+Future<void> showOptionsCardsDialog(context) async {
   final screenSize = MediaQuery.of(context).size;
   CheckOut checkOut = CheckOut();
   MyFatoorah myFatoorh = MyFatoorah();
