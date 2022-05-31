@@ -47,9 +47,9 @@ class _QRScannerState extends State<QRScanner> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-
+            controller!.pauseCamera();
     inspectorController.openCam.value =false;
-    Navigator.of(context).pop();
+
           },
           child: Icon(Icons.arrow_back),
         ),

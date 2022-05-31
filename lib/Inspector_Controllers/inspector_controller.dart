@@ -17,7 +17,7 @@ class InspectorController extends GetxController{
   Future getBusData(String busId)async{
 
     var headers = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiUm91dGVTdGF0aW9uIiwiUm9sZSI6InN1cGVyQWRtaW4iLCJleHAiOjE2NTE4Mzk4NzAsImlzcyI6IkludmVudG9yeUF1dGhlbnRpY2F0aW9uU2VydmVyIiwiYXVkIjoiSW52ZW50b3J5U2VydmljZVBvdG1hbkNsaWVudCJ9.uYZSA_tE23gy-7zZ8j8dlFeEF-xE4EJmnsjJbTQ57WY',
+      'Authorization': 'Bearer $myToken',
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST', Uri.parse('https://route.click68.com/api/GetBus'));
@@ -49,7 +49,7 @@ class InspectorController extends GetxController{
   }
   Future checkTickets(String paymentId,String userId,)async{
     var headers = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiOTg4MjQ1NjciLCJSb2xlIjoiSW5zcGVjdG9yIiwiZXhwIjoxNjUyNzgzNTcxLCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.bgfEH_ENujNt-aixuFFd1XbkZc2yIMUFCzggOIf5jZs',
+      'Authorization': 'Bearer $myToken',
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST', Uri.parse('https://route.click68.com/api/CheckPaymentByInspector'));
@@ -78,7 +78,7 @@ class InspectorController extends GetxController{
   Future sendCreditRequest()async{
 
     var headers = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicHJvbW90ZXI5OCIsIlJvbGUiOiJQcm9tb3RlciIsImV4cCI6MTY1Mjc4MzAyNSwiaXNzIjoiSW52ZW50b3J5QXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJJbnZlbnRvcnlTZXJ2aWNlUG90bWFuQ2xpZW50In0.OHCvZjl745patjv9uipuVl5Vue1mRpx_GpqSg6n5wck',
+      'Authorization': 'Bearer $myToken',
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST', Uri.parse('https://route.click68.com/api/ChargeWalletByPromoter'));

@@ -40,7 +40,6 @@ class _MainScreenState extends State<MainScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    currentTp = widget.currentPage;
     return Container(
 
         child:SafeArea(child: Scaffold(
