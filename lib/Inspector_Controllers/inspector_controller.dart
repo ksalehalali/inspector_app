@@ -13,6 +13,13 @@ class InspectorController extends GetxController{
   var openCam =false.obs;
   var busScanned =false.obs;
   var busScannedData = {};
+  var inspectorBusesChecked =[].obs;
+  var inspectorTicketsChecked =[].obs;
+  var ticketChecked ={}.obs;
+  var paymentsForBus = [].obs;
+  var gotBusesChecked =false.obs;
+  var gotTicketsChecked =false.obs;
+var ticketIdScanned =''.obs;
 
   Future getBusData(String busId)async{
 
@@ -32,9 +39,11 @@ class InspectorController extends GetxController{
       var json = jsonDecode(await response.stream.bytesToString());
       var data = json['description'];
       busScannedData =data;
-      print(data);
+      print("bus data :: ${data}");
       openCam.value =false;
+      getInspectorBusesChecked();
       busScanned.value =true;
+      await checkBus();
       Get.to(()=>  const MainScreen( currentPage: 2,));
     }else{
       busScanned.value =false;
@@ -48,6 +57,7 @@ class InspectorController extends GetxController{
 
   }
   Future checkTickets(String paymentId,String userId,)async{
+    ticketIdScanned.value = paymentId;
     var headers = {
       'Authorization': 'Bearer $myToken',
       'Content-Type': 'application/json'
@@ -62,17 +72,26 @@ class InspectorController extends GetxController{
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-      openCam.value =false;
-      Get.dialog(CustomDialogTickets( failed: false));
+      var json = jsonDecode(await response.stream.bytesToString());
+      ticketChecked.value =json;
+      var data = json['description'];
+      ticketChecked.value =data;
+
+      if(json['status'] ==true){
+        openCam.value =false;
+        Get.dialog(CustomDialogTickets( failed: false,message: 'done',));
+      }else{
+        Get.dialog(CustomDialogTickets( failed: true,message: data,));
+
+      }
+
     }
     else {
       print(response.statusCode);
       print(response.reasonPhrase);
-      Get.dialog(CustomDialogTickets( failed: true));
 
     }
-
+update();
   }
 
   Future sendCreditRequest()async{
@@ -106,6 +125,94 @@ class InspectorController extends GetxController{
     else {
       print(response.statusCode);
 
+      print(response.reasonPhrase);
+    }
+
+
+  }
+
+  //get inspector buses checked
+Future getInspectorBusesChecked()async{
+    gotBusesChecked.value =false ;
+  var headers = {
+    'Authorization': 'bearer $myToken',
+    'Content-Type': 'application/json'
+  };
+  var request = http.Request('POST', Uri.parse('https://route.click68.com/api/ListInspictionBusByInspector'));
+  request.body = json.encode({
+    "PageSize": "1113",
+    "PageNumber": "1"
+  });
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    var json = jsonDecode(await response.stream.bytesToString());
+    var data = json['description'];
+    print('buses checked :: ${json}');
+    inspectorBusesChecked.value = data;
+    gotBusesChecked.value =true ;
+update();
+
+  }
+  else {
+    print(response.reasonPhrase);
+  }
+
+}
+
+  //check  bus
+  Future checkBus()async{
+    var headers = {
+      'Authorization': 'bearer $myToken',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://route.click68.com/api/InspectionBus'));
+    request.body = json.encode({
+      "id":"76ae4d9d-9fff-40cf-f7db-08da3d58147f"
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var json = jsonDecode(await response.stream.bytesToString());
+      var data = json['description'];
+      print('payments for bus  :: ${json}');
+      paymentsForBus.value = data;
+update();
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
+  Future getTicketsChecked()async{
+    gotTicketsChecked.value =false;
+    var headers = {
+      'Authorization': 'bearer $myToken',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://route.click68.com/api/ListInspictionUserByInspector'));
+    request.body = json.encode({
+      "PageNumber": 1,
+      "PageSize": 1110
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var json = jsonDecode(await response.stream.bytesToString());
+      var data = json['description'];
+      print('tickets checked  :: ${json}');
+      inspectorTicketsChecked.value = data;
+      gotTicketsChecked.value =true;
+
+    }
+    else {
       print(response.reasonPhrase);
     }
 

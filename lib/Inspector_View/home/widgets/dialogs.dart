@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Inspector_Controllers/current_data.dart';
+import '../../../Inspector_Controllers/inspector_controller.dart';
 
 
 class CustomDialog extends StatelessWidget {
@@ -147,9 +148,10 @@ class CustomDialog extends StatelessWidget {
 //checkTickets
 class CustomDialogTickets extends StatelessWidget {
   bool failed;
-
-  CustomDialogTickets({Key? key, required this.failed})
+  String message;
+  CustomDialogTickets({Key? key, required this.failed,required this.message})
       : super(key: key);
+  final InspectorController inspectorController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -187,12 +189,13 @@ class CustomDialogTickets extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
 
                     children: [
                       Center(
                         child: Text(
-                          failed==false?'Correct Ticket':'Wrong',
+                          failed==false?'Correct Ticket':'ERROR \n\n $message',
                           style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold, color: failed==false?Colors.green[700]:Colors.red,),
                         ),
@@ -206,8 +209,8 @@ class CustomDialogTickets extends StatelessWidget {
                            'Ticket Id ',
                            style: TextStyle(fontSize: 13),
                          ),
-                         const Text(
-                           '121212',
+                          Text(
+                           inspectorController.ticketIdScanned.value.toString(),
                            style: TextStyle(
                              fontSize: 14,
                              fontWeight: FontWeight.bold,
@@ -215,14 +218,26 @@ class CustomDialogTickets extends StatelessWidget {
                            maxLines: 1,
                          ),
                          const SizedBox(
-                           height: 12.0,
+                           height: 19.0,
                          ),
                          const Text(
                            'User ',
                            style: TextStyle(fontSize: 14),
                          ),
                          Text(
-                           '${paySaved.userName}',
+                           '${inspectorController.ticketChecked.value['userName']}',
+                           style: const TextStyle(
+                               fontSize: 16, fontWeight: FontWeight.bold),
+                         ),
+                         const SizedBox(
+                           height: 19.0,
+                         ),
+                         const Text(
+                           'Date ',
+                           style: TextStyle(fontSize: 14),
+                         ),
+                         Text(
+                           '${inspectorController.ticketChecked.value['paymentDate']}',
                            style: const TextStyle(
                                fontSize: 16, fontWeight: FontWeight.bold),
                          ),

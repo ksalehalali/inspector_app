@@ -6,6 +6,7 @@ import 'package:inspector_app/Inspector_View/home/widgets/headerDesgin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Inspector_Controllers/globals.dart';
 import '../../Inspector_Controllers/personal_information_controller.dart';
+import '../wallet/your_activities.dart';
 import '../your_activities_screen.dart';
 
 

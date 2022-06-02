@@ -8,8 +8,6 @@ import '../../Inspector_Controllers/consts.dart';
 import '../../Inspector_Controllers/globals.dart';
 import '../../Inspector_Controllers/inspector_controller.dart';
 import 'widgets/QRCodeScanner.dart';
-import 'widgets/list_flights.dart';
-import 'widgets/search_results.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -131,7 +129,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         color: Colors.white,
         child: Column(
           children: [
-            Expanded(child: searchSelected ? SearchResults() : ListFlights()),
+            Expanded(child: Text("")),
           ],
         ),
       ),
