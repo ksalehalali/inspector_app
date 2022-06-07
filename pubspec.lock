@@ -140,7 +140,7 @@ packages:
     source: hosted
     version: "0.9.2"
   flutter_lints:
-    dependency: "direct dev"
+    dependency: "direct overridden"
     description:
       name: flutter_lints
       url: "https://pub.dartlang.org"
@@ -418,10 +418,12 @@ packages:
   qr_code_scanner:
     dependency: "direct main"
     description:
-      name: qr_code_scanner
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.1"
+      path: "."
+      ref: flutter-beta
+      resolved-ref: "5c8a34b848e4e1bad6b4c987d89634b90fd3ab9e"
+      url: "https://github.com/X-SLAYER/qr_code_scanner.git"
+    source: git
+    version: "0.7.0"
   shared_preferences:
     dependency: "direct main"
     description:
