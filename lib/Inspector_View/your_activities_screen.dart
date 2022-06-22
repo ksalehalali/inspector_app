@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:inspector_app/Inspector_View/wallet/your_transactions.dart';
+import 'package:inspector_app/Inspector_View/wallet/your_activities.dart';
 
 
-class YourActivitiesScreen extends StatefulWidget {
-  const YourActivitiesScreen({Key? key}) : super(key: key);
+class YourActivitiesScreena extends StatefulWidget {
+  const YourActivitiesScreena({Key? key}) : super(key: key);
 
   @override
-  _YourActivitiesScreenState createState() => _YourActivitiesScreenState();
+  _YourActivitiesScreenaState createState() => _YourActivitiesScreenaState();
 }
 
-class _YourActivitiesScreenState extends State<YourActivitiesScreen> {
+class _YourActivitiesScreenaState extends State<YourActivitiesScreena> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,53 +48,53 @@ class _YourActivitiesScreenState extends State<YourActivitiesScreen> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
-              height: 30.0,
-            ),
-            InkWell(
-              onTap: () {
-
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    right: 12.0, left: 12.0, bottom: 12.0, top: 12.0),
-                child: Row(
-                  children: const [
-                    Icon(Icons.map_outlined),
-                    SizedBox(
-                      width: 4.0,
-                    ),
-                    Text('Transfers'),
-                    Spacer(),
-                    Icon(Icons.arrow_forward_ios_outlined),
-                  ],
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 30.0,
+            // ),
+            // InkWell(
+            //   onTap: () {
+            //
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(
+            //         right: 12.0, left: 12.0, bottom: 12.0, top: 12.0),
+            //     child: Row(
+            //       children: const [
+            //         Icon(Icons.map_outlined),
+            //         SizedBox(
+            //           width: 4.0,
+            //         ),
+            //         Text('Transfers'),
+            //         Spacer(),
+            //         Icon(Icons.arrow_forward_ios_outlined),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // Divider(),
+            // InkWell(
+            //   onTap: () {
+            //     Get.to(() => YourTransactionsScreen());
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(12.0),
+            //     child: Row(
+            //       children: const [
+            //         Icon(Icons.payments_outlined),
+            //         SizedBox(
+            //           width: 4.0,
+            //         ),
+            //         Text('Transactions'),
+            //         Spacer(),
+            //         Icon(Icons.arrow_forward_ios_outlined),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Divider(),
             InkWell(
               onTap: () {
-                Get.to(() => YourTransactionsScreen());
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: const [
-                    Icon(Icons.payments_outlined),
-                    SizedBox(
-                      width: 4.0,
-                    ),
-                    Text('Transactions'),
-                    Spacer(),
-                    Icon(Icons.arrow_forward_ios_outlined),
-                  ],
-                ),
-              ),
-            ),
-            Divider(),
-            InkWell(
-              onTap: () {
-                Get.to(() => YourTransactionsScreen());
+                Get.to(() => YourActivitiesScreena());
               },
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -114,7 +114,7 @@ class _YourActivitiesScreenState extends State<YourActivitiesScreen> {
             Divider(),
             InkWell(
               onTap: () {
-                Get.to(() => YourTransactionsScreen());
+                Get.to(() => YourActivitiesScreena());
               },
               child: Padding(
                 padding: const EdgeInsets.all(12.0),

@@ -1,4 +1,3 @@
-
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +7,6 @@ import '../../Inspector_Controllers/consts.dart';
 import '../../Inspector_Controllers/globals.dart';
 import '../../Inspector_Controllers/inspector_controller.dart';
 import 'widgets/QRCodeScanner.dart';
-import 'widgets/list_flights.dart';
-import 'widgets/search_results.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +21,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: homeTabs.length, vsync: this);
     _tabController!.addListener(_onTextChanged);
+    inspectorController.getInspectorBusesChecked();
+
   }
 
   void _onTextChanged() {
@@ -48,7 +47,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     const Tab(text: 'Buses Checked'),
   ];
   final InspectorController inspectorController = Get.find();
-  var scanType='';
+  var scanType = '';
+  final screenSize = Get.size;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> tabViews = [
@@ -60,68 +61,60 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () async{
+                onPressed: () async {
                   scanType = 'Bus';
 
-                  inspectorController.openCam.value =true;
+                  inspectorController.openCam.value = true;
                 },
                 child: const Text(
                   "Scan Bus",
-                  style: TextStyle(
-                      fontSize: 17,
-                      letterSpacing: 1
-                  ),
+                  style: TextStyle(fontSize: 17, letterSpacing: 1),
                 ),
                 style: ElevatedButton.styleFrom(
-
-                    maximumSize: Size(Get.size.width -90,Get.size.width -90),
-                    minimumSize: Size(Get.size.width -90, 40),primary: routes_color2,
+                    maximumSize: Size(Get.size.width - 90, Get.size.width - 90),
+                    minimumSize: Size(Get.size.width - 90, 40),
+                    primary: routes_color2,
                     onPrimary: Colors.white,
-                    alignment: Alignment.center
-                ),
+                    alignment: Alignment.center),
               ),
-              const SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               ElevatedButton(
-                onPressed: () async{
+                onPressed: () async {
                   scanType = 'Ticket';
-                  inspectorController.openCam.value =true;
-
+                  inspectorController.openCam.value = true;
                 },
                 child: const Text(
                   "Scan Ticket",
-                  style: TextStyle(
-                      fontSize: 17,
-                      letterSpacing: 1
-                  ),
+                  style: TextStyle(fontSize: 17, letterSpacing: 1),
                 ),
                 style: ElevatedButton.styleFrom(
-
-                    maximumSize: Size(Get.size.width -90,Get.size.width -90),
-                    minimumSize: Size(Get.size.width -90, 40),primary: routes_color2,
+                    maximumSize: Size(Get.size.width - 90, Get.size.width - 90),
+                    minimumSize: Size(Get.size.width - 90, 40),
+                    primary: routes_color2,
                     onPrimary: Colors.white,
-                    alignment: Alignment.center
-                ),
+                    alignment: Alignment.center),
               ),
-              SizedBox(height: 30,),
-
+              SizedBox(
+                height: 30,
+              ),
               ElevatedButton(
-                onPressed: () async{
-                  Get.to(()=>const BalanceCalculator(chargeAmount: false,));
+                onPressed: () async {
+                  Get.to(() => const BalanceCalculator(
+                        chargeAmount: false,
+                      ));
                 },
                 child: const Text(
                   "Send money",
-                  style: TextStyle(
-                      fontSize: 17,
-                      letterSpacing: 1
-                  ),
+                  style: TextStyle(fontSize: 17, letterSpacing: 1),
                 ),
                 style: ElevatedButton.styleFrom(
-
-                    maximumSize: Size(Get.size.width -90,Get.size.width -90),
-                    minimumSize: Size(Get.size.width -90, 40),primary: routes_color2,
+                    maximumSize: Size(Get.size.width - 90, Get.size.width - 90),
+                    minimumSize: Size(Get.size.width - 90, 40),
+                    primary: routes_color2,
                     onPrimary: Colors.white,
-                    alignment: Alignment.center
-                ),
+                    alignment: Alignment.center),
               ),
             ],
           ),
@@ -131,7 +124,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         color: Colors.white,
         child: Column(
           children: [
-            Expanded(child: searchSelected ? SearchResults() : ListFlights()),
+            SizedBox(height: screenSize.height *.1 -40,),
+            Expanded(
+              child: SizedBox(
+                height: 500,
+                child: CustomScrollView(
+                  slivers: [
+                    Obx(()=> SliverList(delegate: SliverChildBuilderDelegate((context,index){
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading:Text('${index+1}',style: TextStyle(color: Colors.black,fontSize: 16),),
+                            title: Text('${inspectorController.inspectorBusesChecked.value[index]['company']}',style: TextStyle(color: Colors.black),),
+                            subtitle:  Text("Plate Number : ${inspectorController.inspectorBusesChecked[index]['palteNumber']}",style: TextStyle(height: 2),),
+                            trailing:  Text("Route : ${inspectorController.inspectorBusesChecked[index]['route']}",style: TextStyle(color:Colors.red,fontWeight: FontWeight.w600),),
+                            onTap: (){
+
+                            },
+                          ),
+                          Divider(thickness: 1,height: 10,),
+                        ],
+                      );
+                    },childCount:inspectorController.inspectorBusesChecked.length ),),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -141,21 +160,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       backgroundColor: routes_color,
       body: Padding(
         padding: const EdgeInsets.only(top: 42),
-        child: Obx(()=>Stack(
+        child: Obx(
+          () => Stack(
             children: [
               Column(
                 children: [
                   Container(
                     decoration: BoxDecoration(
                         gradient: LinearGradient(colors: [
-
                           routes_color4,
                           routes_color,
-                        ]
-                        )
-                        ,
-                        color: Colors.white
-                    ),
+                        ]),
+                        color: Colors.white),
                     height: MediaQuery.of(context).size.height * 0.25,
                   ),
                   Expanded(
@@ -175,23 +191,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       height: (MediaQuery.of(context).size.height * 0.25) - 42,
                       child: Stack(
                         children: [
-
                           Column(
                             children: [
                               Row(
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: const [
-                                         DelayedDisplay(
-                                              child: Text(
-                                                'WELCOME INSPECTOR  KHALED',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
+                                      DelayedDisplay(
+                                        child: Text(
+                                          'WELCOME INSPECTOR  KHALED',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
                                       Text(
                                         '',
                                         style: TextStyle(
@@ -302,8 +318,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 AnimatedContainer(
                                   duration: Duration(milliseconds: 200),
                                   height: 44,
-                                  width: (MediaQuery.of(context).size.width / 2) -
-                                      26,
+                                  width:
+                                      (MediaQuery.of(context).size.width / 2) -
+                                          26,
                                   margin: EdgeInsets.fromLTRB(
                                       tabIndex == 1
                                           ? (MediaQuery.of(context).size.width /
@@ -350,44 +367,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                    Spacer(),
-                    _tabController!.index == 1
-                        ? DelayedDisplay(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    //searchSelected = !searchSelected;
-                                  });
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                      if (states.contains(MaterialState.pressed))
-                                        return veppoLightGrey;
-                                      return routes_color;
-                                    },
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                                  child: Text(
-                                    searchSelected ? 'Back' : 'Search',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Container(),
+
                   ],
                 ),
               ),
-              inspectorController.openCam.value ==true? QRScanner(scanType: scanType,):Container(),
-
+              inspectorController.openCam.value == true
+                  ? QRScanner(
+                      scanType: scanType,
+                    )
+                  : Container(),
             ],
           ),
         ),

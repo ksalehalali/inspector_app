@@ -90,7 +90,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['applicationRoute']['name_EN']}':'',
+                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['routeName']}':'',
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -106,11 +106,11 @@ class _BusDetailsState extends State<BusDetails> {
                     const SizedBox(
                       height: 4.0,
                     ),
-                    Text(
-                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['applicationRoute']['from_To_EN']}':'',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   inspectorController.busScanned.value==true?'${inspectorController.busScannedData['applicationRoute']['from_To_EN']}':'',
+                    //   style: const TextStyle(
+                    //       fontSize: 16, fontWeight: FontWeight.bold),
+                    // ),
                     dividerDesign(),
 
                     const SizedBox(
@@ -145,7 +145,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height: 4.0,
                     ),
                     Text(
-                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['palteNumber']}':'',
+                      inspectorController.busScanned.value==true?'${inspectorController.paymentsForBus.value.length}':'',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -165,7 +165,7 @@ class _BusDetailsState extends State<BusDetails> {
                       height:4.0,
                     ),
                     Text(
-                      inspectorController.busScanned.value==true?'${inspectorController.busScannedData['kind']}':'',
+                      inspectorController.busScanned.value==true?'${inspectorController.paymentsForBus.value.length}':'',
                       style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                     ),
