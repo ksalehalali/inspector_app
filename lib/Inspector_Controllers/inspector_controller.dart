@@ -63,6 +63,7 @@ class InspectorController extends GetxController{
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+
       openCam.value =false;
       Get.dialog(CustomDialogTickets( failed: false));
     }
