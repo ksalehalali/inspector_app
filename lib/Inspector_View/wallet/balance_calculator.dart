@@ -69,12 +69,12 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.1 * buttonHeight,
       color: buttonColor,
-      child: FlatButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0.0),
-              side: const BorderSide(
-                  color: Colors.white, width: 1, style: BorderStyle.solid)),
-          padding: EdgeInsets.all(16.0),
+      child: ElevatedButton(
+          // shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.circular(0.0),
+          //     side: const BorderSide(
+          //         color: Colors.white, width: 1, style: BorderStyle.solid)),
+        //  padding: EdgeInsets.all(16.0),
           onPressed: null,
           child: Text(
             buttonText,
@@ -351,19 +351,19 @@ class _BalanceCalculatorState extends State<BalanceCalculator> {
   late MFPaymentCardView mfPaymentCardView;
   void initiateSession() {
 
-    MFSDK.initiateSession((MFResult<MFInitiateSessionResponse> result) => {
-      if (result.isSuccess())
-        {
-          mfPaymentCardView.load(result.response!)}
-      else
-        {
-          setState(() {
-            print("Response: " +
-                result.error!.toJson().toString().toString());
-            _response = result.error!.message!;
-          })
-        }
-    });
+    // MFSDK.initiateSession((MFResult<MFInitiateSessionResponse> result) => {
+    //   if (result.isSuccess())
+    //     {
+    //       mfPaymentCardView.load(result.response!)}
+    //   else
+    //     {
+    //       setState(() {
+    //         print("Response: " +
+    //             result.error!.toJson().toString().toString());
+    //         _response = result.error!.message!;
+    //       })
+    //     }
+    // });
   }
 }
 

@@ -109,7 +109,7 @@ class CustomDialog extends StatelessWidget {
                       )),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: FlatButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -271,7 +271,7 @@ class CustomDialogTickets extends StatelessWidget {
                           )),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: FlatButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },

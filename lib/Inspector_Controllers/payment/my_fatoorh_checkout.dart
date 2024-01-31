@@ -46,30 +46,30 @@ class MyFatoorah {
       amount,
     );
 
-    MFSDK.executePayment(
-        context,
-        request,
-        MFAPILanguage.EN,
-        (String invoiceId, MFResult<MFPaymentStatusResponse> result) => {
-              if (result.isSuccess())
-                {
-                  res = result.response!.toJson(),
-                  walletController.recharge(invoiceId:res['InvoiceId'],invoiceValue: res['InvoiceValue'],paymentGateway:res['InvoiceTransactions'][0]['PaymentGateway'],  ),
-
-                  print(result.response!.toJson().toString()),
-                  print("booody :: ${result.response!.toJson()}"),
-                  // chargeSaved.invoiceId = res['InvoiceId'],
-                  // chargeSaved.invoiceValue = res['InvoiceValue'],
-                  // chargeSaved.createdDate = res['CreatedDate'],
-                  // chargeSaved.paymentGateway =
-                  //     res['InvoiceTransactions'][0]['PaymentGateway'],
-                  Get.offAll(const MainScreen(currentPage: 0,))
-                }
-              else
-                {
-                  print('wrong with recharge'),
-                  print(result.error!.message)}
-            });
+    // MFSDK.executePayment(
+    //     context,
+    //     request,
+    //     MFAPILanguage.EN,
+    //     (String invoiceId, MFResult<MFPaymentStatusResponse> result) => {
+    //           if (result.isSuccess())
+    //             {
+    //               res = result.response!.toJson(),
+    //               walletController.recharge(invoiceId:res['InvoiceId'],invoiceValue: res['InvoiceValue'],paymentGateway:res['InvoiceTransactions'][0]['PaymentGateway'],  ),
+    //
+    //               print(result.response!.toJson().toString()),
+    //               print("booody :: ${result.response!.toJson()}"),
+    //               // chargeSaved.invoiceId = res['InvoiceId'],
+    //               // chargeSaved.invoiceValue = res['InvoiceValue'],
+    //               // chargeSaved.createdDate = res['CreatedDate'],
+    //               // chargeSaved.paymentGateway =
+    //               //     res['InvoiceTransactions'][0]['PaymentGateway'],
+    //               Get.offAll(const MainScreen(currentPage: 0,))
+    //             }
+    //           else
+    //             {
+    //               print('wrong with recharge'),
+    //               print(result.error!.message)}
+    //         }, onPaymentResponse:(){});
     return request;
   }
 
